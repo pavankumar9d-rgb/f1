@@ -10,71 +10,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const ResponsivePage(),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Responsive LayoutBuilder')),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 600) {
+              return Row(
+                children: [
+                  Expanded(child: Container(color: Colors.redAccent, child: const Center(child: Text('Left Pane')))),
+                  Expanded(child: Container(color: Colors.blueAccent, child: const Center(child: Text('Right Pane')))),
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  Expanded(child: Container(color: Colors.redAccent, child: const Center(child: Text('Top Pane')))),
+                  Expanded(child: Container(color: Colors.blueAccent, child: const Center(child: Text('Bottom Pane')))),
+                ],
+              );
+            }
+          },
+        ),
+      ),
     );
-  }
-}
-
-class ResponsivePage extends StatelessWidget {
-  const ResponsivePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
-    if (width < 600) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Mobile UI'),
-        ),
-        body: const Center(
-          child: Text(
-            'Mobile Screen',
-            style: TextStyle(fontSize: 25),
-          ),
-        ),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Tablet/Desktop UI'),
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 250,
-              height: 200,
-              color: Colors.blue,
-              child: const Center(
-                child: Text(
-                  'Left Panel',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 20),
-            Container(
-              width: 250,
-              height: 200,
-              color: Colors.green,
-              child: const Center(
-                child: Text(
-                  'Right Panel',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }
